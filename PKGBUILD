@@ -1,5 +1,5 @@
 pkgname=rndstr
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Generate random strings in shell"
 arch=(any)
