@@ -1,4 +1,4 @@
-% RNDSTR(1) | Generates random strings (for passwords, keys &c) | Version 1.0.1
+% RNDSTR(1) | Generates random strings (for passwords, keys &c) | Version 1.0.2
 
 ## SYNOPSIS
 
@@ -22,10 +22,10 @@ This script generates random strings that can be used for passwords, keys &c.
     | *h*   | or | *hex*      | “0-9a-f”                                     |
 
   `-l` *LENGTH*
-  : Length of the string.
+  : Length of the string (must be an integer).
 
   `-e` *BITS*
-  : Minimum entropy for the password (default: 128).
+  : Minimum entropy for the password (must be an integer, default: 128).
 
   `-s` *SOURCE*
   : Set the source of randomness (default: '/dev/urandom').

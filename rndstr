@@ -16,13 +16,13 @@ Usage: rndstr [options]
 Generate a random string (for passwords, keys &c).
 
   -t TYPE       Select type of string (default: base58).
-                    'an'   or  'alnum'      '0-9A-Z-a-z'
-                    'ans'  or  'alnumsym'   alnum + '!#$%&()*+,-./:;<=>?@[]^_\`{|}~'
-                    'b58'  or  'base58'     base58 (Bitcoin address alphabet)
-                    'bip'  or  'bip0039'    BIP-0039 seed phrase
-                    'h'    or  'hex'        '0-9a-f'
-  -l LENGTH     Length of the string.
-  -e BITS       Minimum entropy for the password (default: 128).
+                  'an'   or  'alnum'      '0-9A-Z-a-z'
+                  'ans'  or  'alnumsym'   alnum + '!#$%&()*+,-./:;<=>?@[]^_\`{|}~'
+                  'b58'  or  'base58'     base58 (Bitcoin address alphabet)
+                  'bip'  or  'bip0039'    BIP-0039 seed phrase
+                  'h'    or  'hex'        '0-9a-f'
+  -l LENGTH     Length of the string (must be an integer).
+  -e BITS       Minimum entropy for the password (must be an integer, default: 128).
   -s SOURCE     Set the source of randomness (default: '/dev/urandom').
   -q            Be quiet.
   -V            Show version.
@@ -353,33 +353,33 @@ bip0039_seed_phrase() {
 
 while getopts "t:l:e:s:qVh" arg; do
   case "$arg" in
-  t)  case "$OPTARG" in
+  t) case "$OPTARG" in
       an|ans|b58|bip|h|alnum|alnumsym|base58|bip0039|hex) TYPE="$OPTARG" ;;
       *) usage 1 ;;
     esac
     ;;
-  l)  if [ -z "$OPTARG" ] && [ "$OPTARG" -le 0 ]; then
+  l) if [ -z "$OPTARG" ] || [[ ! "$OPTARG" =~ ^-?[0-9]+$ ]] || [ "$OPTARG" -le 0 ]; then
       usage 1
     fi
     LENGTH="$OPTARG"; ENTROPY=0
     ;;
-  e)  if [ -z "$OPTARG" ] && [ "$OPTARG" -le 0 ]; then
+  e) if [ -z "$OPTARG" ] || [[ ! "$OPTARG" =~ ^-?[0-9]+$ ]] || [ "$OPTARG" -le 0 ]; then
       usage 1
     fi
     ENTROPY="$OPTARG"; LENGTH=0
     ;;
   s)  SOURCE="$OPTARG" ;;
   q)  QUIET=1 ;;
-  V)  echo 'rndstr v1.0.1'; exit 0 ;;
+  V)  echo 'rndstr v1.0.2'; exit 0 ;;
   h)  usage 0 ;;
   *)  usage 1 ;;
   esac
 done
 
 ALPHABET_BASE58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
-ALPHABET_ALNUM="${ALPHABET_BASE58}"'0IOl'
+ALPHABET_ALNUM="${ALPHABET_BASE58}0IOl"
 ALPHABET_ALNUMSYM="${ALPHABET_ALNUM}"'!#$%&()*+,-./:;<=>?@[]^_`{|}~'
-ALPHABET_HEX="0123456789abcdef"
+ALPHABET_HEX='0123456789abcdef'
 
 case "$TYPE" in
   an  | alnum    ) alphabetic_random "$ALPHABET_ALNUM" ;;

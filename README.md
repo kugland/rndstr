@@ -21,10 +21,10 @@ Select type of string (default: base58).
 | *h*   | or  | *hex*      | “0-9a-f”                                                |
 
 `-l` *LENGTH*  
-Length of the string.
+Length of the string (must be an integer).
 
 `-e` *BITS*  
-Minimum entropy for the password (default: 128).
+Minimum entropy for the password (must be an integer, default: 128).
 
 `-s` *SOURCE*  
 Set the source of randomness (default: ‘/dev/urandom’).
