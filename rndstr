@@ -25,6 +25,7 @@ Generate a random string (for passwords, keys &c).
   -e BITS       Minimum entropy for the password (default: 128).
   -s SOURCE     Set the source of randomness (default: '/dev/urandom').
   -q            Be quiet.
+  -V            Show version.
   -h            Show this message.
 USAGE
   exit "$1"
@@ -350,7 +351,7 @@ bip0039_seed_phrase() {
   show_info 2048
 }
 
-while getopts "t:l:e:s:qh" arg; do
+while getopts "t:l:e:s:qVh" arg; do
   case "$arg" in
   t)  case "$OPTARG" in
       an|ans|b58|bip|h|alnum|alnumsym|base58|bip0039|hex) TYPE="$OPTARG" ;;
@@ -369,6 +370,7 @@ while getopts "t:l:e:s:qh" arg; do
     ;;
   s)  SOURCE="$OPTARG" ;;
   q)  QUIET=1 ;;
+  V)  echo 'rndstr v1.0.1'; exit 0 ;;
   h)  usage 0 ;;
   *)  usage 1 ;;
   esac
